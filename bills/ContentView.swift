@@ -14,7 +14,7 @@ struct ContentView: View {
             TabView(selection: $selectedTab) {
                 Home()
                     .tabItem {
-                        Image("home")
+                        Image(systemName: "heart.fill")
                             .renderingMode(.template)
                             .environment(\.symbolVariants, .none)
                         Text("Home")
@@ -22,7 +22,7 @@ struct ContentView: View {
                 
                 Profile()
                     .tabItem {
-                        Image("profile")
+                        Image(systemName: "heart.fill")
                             .renderingMode(.template)
                             .environment(\.symbolVariants, .none)
                         Text("Profile")

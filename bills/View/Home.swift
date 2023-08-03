@@ -11,99 +11,103 @@ struct Home: View {
     
     var body: some View {
         NavigationView{
-            Form {
-                Section(){
-                    NavigationLink(destination:About()) {
-                        HStack{
-                            //Profile photo
-                            Image("faceuna")
-                                .resizable()
-                                .frame(width: 50.0, height: 50.0)
-                                .clipShape(Circle())
-                            
-                            //Nama dan Status
-                            VStack(alignment:.leading){
-                                Text("Unaivan").font(.headline)
-                                Text("Interface Engineer").font(.caption)
+            List {
+                Section(header: TopContent()) {
+                   // ... your list content
+                    ForEach(0..<14) { row in
+                        NavigationLink(destination:About()) {
+                            HStack(spacing:10){
+                                Image(systemName: "questionmark.circle")
+                                    .frame(width:56, height:56)
+                                    .cornerRadius(10)
+                                    .foregroundColor(Color.gray)
+                                    .font(.system(size: 24))
+                                VStack(alignment: .leading){
+                                    Text("Get help")
+                                    Text("Indihome")
+                                        .font(.system(size: 12))
+                                }
                             }
+                            .padding(.top, 2)
+                            .padding(.bottom, 2)
+                        }
+                    }.listRowBackground(
+                    Capsule()
+                        .fill(Color.white)
+                        .padding(4)
+                    )
+                }
+            }.listStyle(.insetGrouped)
+            .navigationTitle("Tagihan")
+        }
+    }
+}
+
+
+
+struct TopContent: View {
+    @State var progressValue: Float = 0.0
+    var body: some View {
+        VStack{
+            Text("Rp \(1.000)")
+                .font(.system(size: 42))
+                .foregroundColor(Color.black)
+            
+            VStack{
+                HStack{
+                    Text("Februari 2023")
+                        .font(.system(size: 14))
+                    Text("Februari 2023")
+                        .foregroundColor(Color.blue)
+                        .font(.system(size: 14))
+                }
+                
+                ProgressBar(value: $progressValue).frame(height: 20)
                             
+                            Button(action: {
+                                self.startProgressBar()
+                            }) {
+                                Text("Start Progress")
+                            }.padding()
                             
-                        }
-                    }
-                }
-                .padding(.top,5)
-                .padding(.bottom,5)
+                            Button(action: {
+                                self.resetProgressBar()
+                            }) {
+                                Text("Reset")
+                            }
                 
-                Text("Rp 1.756.000,00")
-                
-                //navigation pesan berbintang
-                Section(header: Text("Pengaturan Umum")){
-                    NavigationLink(destination:About()) {
-                        //Image Bintang
-                        HStack(spacing:20){
-                            Image(systemName: "star.fill")
-                                .frame(width:35, height:35)
-                                .background(Color.orange)
-                                .cornerRadius(10)
-                                .foregroundColor(Color.white)
-                            //Text
-                            Text("Pesan Berbintang")
-                        }
-                        .padding(.top,2)
-                        .padding(.bottom,2)
-                    }
-                    //navigation whatsapp desktop
-                    NavigationLink(destination:About()) {
-                        //Image Bintang
-                        HStack(spacing:20){
-                            Image(systemName: "tv")
-                                .frame(width:35, height:35)
-                                .background(Color.green)
-                                .cornerRadius(10)
-                                .foregroundColor(Color.white)
-                            //Text
-                            Text("WhatsApp Web/Desktop")
-                        }
-                        .padding(.top,2)
-                        .padding(.bottom,2)
-                    }
-                }
-                
-                //Akun
-                Section(header: Text("Pengaturan Akun")){
-                    //navigation pesan berbintang
-                    NavigationLink(destination:About()) {
-                        //Image Bintang
-                        HStack(spacing:20){
-                            Image(systemName: "person")
-                                .frame(width:35, height:35)
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                                .foregroundColor(Color.white)
-                            //Text
-                            Text("Akun")
-                        }
-                        .padding(.top,2)
-                        .padding(.bottom,2)
-                    }
-                    //navigation whatsapp desktop
-                    NavigationLink(destination:About()) {
-                        //Image Bintang
-                        HStack(spacing:20){
-                            Image(systemName: "phone.circle")
-                                .frame(width:35, height:35)
-                                .background(Color.green)
-                                .cornerRadius(10)
-                                .foregroundColor(Color.white)
-                            //Text
-                            Text("Chat")
-                        }
-                        .padding(.top,2)
-                        .padding(.bottom,2)
-                    }
-                }
             }
-            .navigationBarTitle("Tagihan")
-        }.listStyle(.plain)
+            .background(Color.white)
+            .padding(6)
+        }
+    }
+    
+    func startProgressBar() {
+            for _ in 0...80 {
+                self.progressValue += 0.015
+            }
+        }
+        
+        func resetProgressBar() {
+            self.progressValue = 0.0
+        }
+}
+
+
+struct ProgressBar: View {
+    @Binding var value: Float
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Rectangle().frame(width: geometry.size.width , height: geometry.size.height)
+                    .opacity(0.3)
+                    .foregroundColor(Color(UIColor.systemTeal))
+                
+                Rectangle().frame(width: min(CGFloat(self.value)*geometry.size.width, geometry.size.width), height: geometry.size.height)
+                    .foregroundColor(Color(UIColor.systemBlue))
+                    .animation(.linear)
+            }.cornerRadius(45.0)
+        }
     }
 }

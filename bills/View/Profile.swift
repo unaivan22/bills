@@ -100,7 +100,7 @@ struct Profile: View {
                 }
                 
                 //Akun
-                Section(header: Text("Support")){
+                Section(header: TopContent()){
                     
                     NavigationLink(destination:About()) {
                         HStack(spacing:20){
