@@ -14,7 +14,7 @@ struct ContentView: View {
             TabView(selection: $selectedTab) {
                 Home()
                     .tabItem {
-                        Image(systemName: "heart.fill")
+                        Image(systemName: "square.text.square.fill")
                             .renderingMode(.template)
                             .environment(\.symbolVariants, .none)
                         Text("Home")
@@ -22,14 +22,22 @@ struct ContentView: View {
                 
                 Profile()
                     .tabItem {
-                        Image(systemName: "heart.fill")
+                        Image(systemName: "chart.bar.xaxis")
+                            .renderingMode(.template)
+                            .environment(\.symbolVariants, .none)
+                        Text("Chart")
+                    }.tag(1)
+                
+                Profile()
+                    .tabItem {
+                        Image(systemName: "person.fill")
                             .renderingMode(.template)
                             .environment(\.symbolVariants, .none)
                         Text("Profile")
                     }.tag(2)
             }
-            .accentColor(.black)
-        }.background(Color.red)
+            .accentColor(.blue)
+        }
     }
 }
 

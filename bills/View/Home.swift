@@ -8,106 +8,175 @@
 import SwiftUI
 
 struct Home: View {
+    init() {
+            //Use this if NavigationBarTitle is with Large Font
+            UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont.systemFont(ofSize: 14, weight: .medium)]
+
+        }
     
     var body: some View {
         NavigationView{
-            List {
-                Section(header: TopContent()) {
-                   // ... your list content
-                    ForEach(0..<14) { row in
+            List(){
+                Section(){
+                    HStack{
+                        TopContent()
+                        
+                        
+                    }
+                }
+                .listRowBackground(Color.clear)
+                .padding(.top, -15)
+                .padding(.bottom, -18)
+                
+                Section(header: Text("Rincian Tagihan")) {
+                    // ... your list content
+                    ForEach(0..<8) { row in
                         NavigationLink(destination:About()) {
-                            HStack(spacing:10){
+                            HStack(spacing:12){
                                 Image(systemName: "questionmark.circle")
-                                    .frame(width:56, height:56)
-                                    .cornerRadius(10)
                                     .foregroundColor(Color.gray)
                                     .font(.system(size: 24))
-                                VStack(alignment: .leading){
-                                    Text("Get help")
+                                VStack(alignment: .leading, spacing: 2){
+                                    Text("Rp \(1000000)")
+                                        .font(.system(size: 18))
+                                        .fontWeight(.bold)
                                     Text("Indihome")
                                         .font(.system(size: 12))
+                                        .foregroundColor(Color.gray)
                                 }
+                                Spacer()
+                                VStack(alignment: .center, spacing: 2){
+                                    HStack(spacing: 2){
+                                        Image(systemName: "checkmark.seal.fill")
+                                            .foregroundColor(Color.green)
+                                            .font(.system(size: 14))
+                                        Text("Lunas")
+                                            .font(.system(size: 14))
+                                            .foregroundColor(Color.green)
+                                    }
+                                    Text("Dibayar tgl 10")
+                                        .font(.system(size: 11))
+                                        .foregroundColor(Color.gray)
+                                }
+
                             }
-                            .padding(.top, 2)
-                            .padding(.bottom, 2)
-                        }
-                    }.listRowBackground(
-                    Capsule()
-                        .fill(Color.white)
-                        .padding(4)
+                            .padding(.top, 6)
+                            .padding(.bottom, 6)
+                        }.listRowSeparator(.hidden)
+                    }
+                    .listRowBackground(
+                        Rectangle()
+                            .fill(Color.white)
+                            .padding(4)
+                            .cornerRadius(28)
                     )
                 }
-            }.listStyle(.insetGrouped)
-            .navigationTitle("Tagihan")
+                
+            }
+            .listStyle(.insetGrouped)
+            . listRowSeparator(. hidden)
+            .navigationBarTitle(Text("Tagihan").font(.subheadline), displayMode: .large)
         }
     }
 }
-
 
 
 struct TopContent: View {
     @State var progressValue: Float = 0.0
     var body: some View {
-        VStack{
-            Text("Rp \(1.000)")
+        VStack(alignment: .leading, spacing: 20){
+            Text("Rp \(1000000)")
                 .font(.system(size: 42))
                 .foregroundColor(Color.black)
+                .fontWeight(.bold)
+                .padding(.leading, 20)
+                .frame(width: .infinity)
             
-            VStack{
+            VStack(spacing: 0){
                 HStack{
                     Text("Februari 2023")
                         .font(.system(size: 14))
-                    Text("Februari 2023")
+                        .foregroundColor(Color.gray)
+                    
+                    Spacer()
+                    
+                    Text("Bayar Semua")
                         .foregroundColor(Color.blue)
                         .font(.system(size: 14))
-                }
+                        .fontWeight(.medium)
+                }.frame(width: UIScreen.main.bounds.width - 60)
                 
-                ProgressBar(value: $progressValue).frame(height: 20)
-                            
-                            Button(action: {
-                                self.startProgressBar()
-                            }) {
-                                Text("Start Progress")
-                            }.padding()
-                            
-                            Button(action: {
-                                self.resetProgressBar()
-                            }) {
-                                Text("Reset")
-                            }
+                ProgressBar()
+                
+                HStack{
+                    HStack(alignment: .top){
+                        Circle()
+                            .fill(Color(.systemGray3))
+                            .frame(height: 12)
+                        Text("Belum bayar")
+                            .foregroundColor(Color.gray)
+                            .font(.system(size: 12))
+                    }
+                    HStack{
+                        Circle()
+                            .fill(Color.green)
+                            .frame(height: 12)
+                        Text("Lunas")
+                            .foregroundColor(Color.gray)
+                            .font(.system(size: 12))
+                    }
+                    HStack{
+                        Circle()
+                            .fill(Color.yellow)
+                            .frame(height: 12)
+                        Text("Progres")
+                            .foregroundColor(Color.gray)
+                            .font(.system(size: 12))
+                    }
+                    
+                    Spacer()
+                    
+                }.padding(.leading, 16)
                 
             }
-            .background(Color.white)
+            .frame(width: .infinity)
+            .background(Color.clear)
             .padding(6)
         }
     }
-    
-    func startProgressBar() {
-            for _ in 0...80 {
-                self.progressValue += 0.015
-            }
-        }
-        
-        func resetProgressBar() {
-            self.progressValue = 0.0
-        }
 }
 
 
 struct ProgressBar: View {
-    @Binding var value: Float
-    
+    @State private var progress2: CGFloat = 0.5
+    @State private var progress3: CGFloat = 0.4
     var body: some View {
-        GeometryReader { geometry in
+        VStack {
             ZStack(alignment: .leading) {
-                Rectangle().frame(width: geometry.size.width , height: geometry.size.height)
-                    .opacity(0.3)
-                    .foregroundColor(Color(UIColor.systemTeal))
-                
-                Rectangle().frame(width: min(CGFloat(self.value)*geometry.size.width, geometry.size.width), height: geometry.size.height)
-                    .foregroundColor(Color(UIColor.systemBlue))
-                    .animation(.linear)
-            }.cornerRadius(45.0)
+                Rectangle()
+                    .foregroundColor(Color(.systemGray4))
+                    .frame(height: 10)
+                    .cornerRadius(100)
+                Rectangle()
+                    .foregroundColor(.yellow)
+                    .frame(width: getWidth(for: progress2), height: 10)
+                    .cornerRadius(100)
+                Rectangle()
+                    .foregroundColor(.green)
+                    .frame(width: getWidth(for: progress3), height: 10)
+                    .cornerRadius(100)
+            }
+            .cornerRadius(10)
+            .padding()
+            .frame(width: UIScreen.main.bounds.width - 20)
+            
         }
+        
+        
+    }
+    
+    
+    private func getWidth(for progress: CGFloat) -> CGFloat {
+        return progress * UIScreen.main.bounds.width
     }
 }

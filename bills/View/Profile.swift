@@ -38,7 +38,7 @@ struct Profile: View {
                 
                 
                 //navigation pesan berbintang
-                Section(header: Text("Setting")){
+                Section(header: Text("Setting").font(.title)){
                     NavigationLink(destination:About()) {
                         //Image Bintang
                         HStack(spacing:20){
