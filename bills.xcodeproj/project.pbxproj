@@ -13,6 +13,10 @@
 		A3CAAE552A7B522F00201931 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3CAAE542A7B522F00201931 /* Preview Assets.xcassets */; };
 		A3CAAE5E2A7B53CB00201931 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CAAE5D2A7B53CB00201931 /* Home.swift */; };
 		A3CAAE602A7B53D600201931 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CAAE5F2A7B53D600201931 /* Profile.swift */; };
+		A3E770132A7C951900C476EE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E770122A7C951900C476EE /* Model.swift */; };
+		A3E770152A7C952900C476EE /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E770142A7C952900C476EE /* API.swift */; };
+		A3E770172A7C962600C476EE /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E770162A7C962600C476EE /* Chart.swift */; };
+		A3E770192A7C9E9E00C476EE /* TestCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E770182A7C9E9E00C476EE /* TestCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,10 @@
 		A3CAAE542A7B522F00201931 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A3CAAE5D2A7B53CB00201931 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		A3CAAE5F2A7B53D600201931 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		A3E770122A7C951900C476EE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		A3E770142A7C952900C476EE /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		A3E770162A7C962600C476EE /* Chart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
+		A3E770182A7C9E9E00C476EE /* TestCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +44,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A372CFBA2A7C885800D010F8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A3E770122A7C951900C476EE /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A372CFBB2A7C886100D010F8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A3E770142A7C952900C476EE /* API.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		A3CAAE412A7B522000201931 = {
 			isa = PBXGroup;
 			children = (
@@ -55,6 +79,8 @@
 		A3CAAE4C2A7B522000201931 /* bills */ = {
 			isa = PBXGroup;
 			children = (
+				A372CFBB2A7C886100D010F8 /* Services */,
+				A372CFBA2A7C885800D010F8 /* Model */,
 				A3CAAE5C2A7B53BC00201931 /* View */,
 				A3CAAE4D2A7B522000201931 /* billsApp.swift */,
 				A3CAAE4F2A7B522000201931 /* ContentView.swift */,
@@ -77,6 +103,8 @@
 			children = (
 				A3CAAE5D2A7B53CB00201931 /* Home.swift */,
 				A3CAAE5F2A7B53D600201931 /* Profile.swift */,
+				A3E770162A7C962600C476EE /* Chart.swift */,
+				A3E770182A7C9E9E00C476EE /* TestCode.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -151,9 +179,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3E770132A7C951900C476EE /* Model.swift in Sources */,
+				A3E770172A7C962600C476EE /* Chart.swift in Sources */,
 				A3CAAE502A7B522000201931 /* ContentView.swift in Sources */,
 				A3CAAE602A7B53D600201931 /* Profile.swift in Sources */,
+				A3E770192A7C9E9E00C476EE /* TestCode.swift in Sources */,
 				A3CAAE5E2A7B53CB00201931 /* Home.swift in Sources */,
+				A3E770152A7C952900C476EE /* API.swift in Sources */,
 				A3CAAE4E2A7B522000201931 /* billsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

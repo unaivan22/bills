@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Home: View {
+    @StateObject private var dataManager = DataManager()
     init() {
             //Use this if NavigationBarTitle is with Large Font
             UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont.systemFont(ofSize: 14, weight: .medium)]
@@ -30,46 +31,71 @@ struct Home: View {
                 
                 Section(header: Text("Rincian Tagihan")) {
                     // ... your list content
-                    ForEach(0..<8) { row in
-                        NavigationLink(destination:About()) {
-                            HStack(spacing:12){
-                                Image(systemName: "questionmark.circle")
-                                    .foregroundColor(Color.gray)
-                                    .font(.system(size: 24))
-                                VStack(alignment: .leading, spacing: 2){
-                                    Text("Rp \(1000000)")
-                                        .font(.system(size: 18))
-                                        .fontWeight(.bold)
-                                    Text("Indihome")
-                                        .font(.system(size: 12))
-                                        .foregroundColor(Color.gray)
-                                }
-                                Spacer()
-                                VStack(alignment: .center, spacing: 2){
-                                    HStack(spacing: 2){
-                                        Image(systemName: "checkmark.seal.fill")
-                                            .foregroundColor(Color.green)
-                                            .font(.system(size: 14))
-                                        Text("Lunas")
-                                            .font(.system(size: 14))
-                                            .foregroundColor(Color.green)
+                    
+                    if let userData = dataManager.userData {
+                        ForEach(userData.billdetail, id: \.id) { billDetail in
+                            NavigationLink(destination:About()) {
+                                HStack(spacing:12){
+                                    VStack(alignment: .leading, spacing: 2){
+                                        Text("\(formatCurrency(billDetail.billtotalitem))")
+                                            .font(.system(size: 18))
+                                            .fontWeight(.bold)
+                                        Text((billDetail.billname))
+                                            .font(.system(size: 12))
+                                            .foregroundColor(Color.gray)
                                     }
-                                    Text("Dibayar tgl 10")
-                                        .font(.system(size: 11))
-                                        .foregroundColor(Color.gray)
-                                }
+                                    Spacer()
+                                    VStack(alignment: .center, spacing: 2){
+                                        HStack(spacing: 2){
+                                            Image(systemName: "checkmark.seal.fill")
+                                                .foregroundColor(Color.green)
+                                                .font(.system(size: 14))
+                                            Text("Lunas")
+                                                .font(.system(size: 14))
+                                                .foregroundColor(Color.green)
+                                        }
+//                                        Text("Dibayar tgl 10")
+//                                            .font(.system(size: 11))
+//                                            .foregroundColor(Color.gray)
+                                        if let datePayment = billDetail.billdatepayment {
+                                            Text("Dibayar \(datePayment)")
+                                                .font(.system(size: 11))
+                                                .foregroundColor(Color.gray)
+                                        } else {
+                                            Text("Date Payment: Not available")
+                                        }
+                                    }
 
-                            }
-                            .padding(.top, 6)
-                            .padding(.bottom, 6)
-                        }.listRowSeparator(.hidden)
+                                }
+                                .padding(.top, 6)
+                                .padding(.bottom, 6)
+                            }.listRowSeparator(.hidden)
+                        }
+                        .listRowBackground(
+                            Rectangle()
+                                .fill(Color.white)
+                                .padding(4)
+                                .cornerRadius(28)
+                        )
+                    } else {
+                        Text("Loading...")
                     }
-                    .listRowBackground(
-                        Rectangle()
-                            .fill(Color.white)
-                            .padding(4)
-                            .cornerRadius(28)
-                    )
+                }.onAppear {
+                    dataManager.fetchData()
+                }
+                
+                Section(header: Text("Tambahkan tagihan baru")){
+                    NavigationLink(destination:About()) {
+                        HStack(spacing:12){
+                            VStack(alignment: .leading, spacing: 2){
+                                Text("Tambah")
+                                    .font(.system(size: 14))
+                                    .foregroundColor(Color.blue)
+                            }
+                        }
+                        .padding(.top, 6)
+                        .padding(.bottom, 6)
+                    }.listRowSeparator(.hidden)
                 }
                 
             }
@@ -78,19 +104,36 @@ struct Home: View {
             .navigationBarTitle(Text("Tagihan").font(.subheadline), displayMode: .large)
         }
     }
+    func formatCurrency(_ amount: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "Rp "
+        formatter.locale = Locale(identifier: "id_ID")
+        return formatter.string(from: NSNumber(value: amount)) ?? ""
+    }
 }
 
 
 struct TopContent: View {
+    @StateObject private var dataManager = DataManager()
     @State var progressValue: Float = 0.0
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 20){
-            Text("Rp \(1000000)")
-                .font(.system(size: 42))
-                .foregroundColor(Color.black)
-                .fontWeight(.bold)
-                .padding(.leading, 20)
-                .frame(width: .infinity)
+            HStack{
+                if let userData = dataManager.userData {
+                    Text("\(formatCurrency(userData.billtotal))")
+                        .font(.system(size: 42))
+                        .foregroundColor(Color.black)
+                        .fontWeight(.bold)
+                        .padding(.leading, 20)
+                        .frame(width: .infinity)
+                } else {
+                    Text("Data not found...")
+                }
+            }.onAppear {
+                dataManager.fetchData()
+            }
             
             VStack(spacing: 0){
                 HStack{
@@ -143,6 +186,13 @@ struct TopContent: View {
             .background(Color.clear)
             .padding(6)
         }
+    }
+    func formatCurrency(_ amount: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "Rp "
+        formatter.locale = Locale(identifier: "id_ID")
+        return formatter.string(from: NSNumber(value: amount)) ?? ""
     }
 }
 

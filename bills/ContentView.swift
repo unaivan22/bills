@@ -14,15 +14,16 @@ struct ContentView: View {
             TabView(selection: $selectedTab) {
                 Home()
                     .tabItem {
-                        Image(systemName: "square.text.square.fill")
+                        Image("ic_wallet")
                             .renderingMode(.template)
                             .environment(\.symbolVariants, .none)
+                            .font(.system(size: 12))
                         Text("Home")
                     }.tag(0)
                 
-                Profile()
+                Chart()
                     .tabItem {
-                        Image(systemName: "chart.bar.xaxis")
+                        Image("ic_chart")
                             .renderingMode(.template)
                             .environment(\.symbolVariants, .none)
                         Text("Chart")
@@ -30,11 +31,19 @@ struct ContentView: View {
                 
                 Profile()
                     .tabItem {
-                        Image(systemName: "person.fill")
+                        Image("ic_profile")
                             .renderingMode(.template)
                             .environment(\.symbolVariants, .none)
                         Text("Profile")
                     }.tag(2)
+                
+                TestCode()
+                    .tabItem {
+                        Image("ic_profile")
+                            .renderingMode(.template)
+                            .environment(\.symbolVariants, .none)
+                        Text("Profile")
+                    }.tag(3)
             }
             .accentColor(.blue)
         }
